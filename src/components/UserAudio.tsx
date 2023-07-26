@@ -2,6 +2,8 @@
 import { useState, useRef } from "react";
 import { BsFillPlayCircleFill, BsPauseCircleFill } from "react-icons/bs";
 
+import { PlayerButton } from "./PlayerButton";
+import { TextArea } from "./Textarea";
 import { Button } from "./Button";
 
 export function UserAudio() {
@@ -17,9 +19,12 @@ export function UserAudio() {
   const textRef = useRef() as React.MutableRefObject<HTMLTextAreaElement>;
 
   function clearText() {
-    if (textRef.current.value !== "" && window.speechSynthesis.speaking === false) {
+    const speaking = window.speechSynthesis.speaking;
+    if (textRef.current.value !== "" && !speaking && screen === "english") {
       textRef.current.value = "";
       text.firstPhrase = "";
+    } else if (textRef.current.value !== "" && !speaking && screen === "portuguese") {
+      textRef.current.value = "";
       text.traduPhrase = "";
     } else {
       return;
@@ -28,14 +33,14 @@ export function UserAudio() {
 
   function handleAudio() {
     let audio = new SpeechSynthesisUtterance(textRef.current.value);
-    if (play === false && textRef.current.value !== "") {
+    if (!play && textRef.current.value !== "") {
       audio.lang = language;
       window.speechSynthesis.speak(audio);
       setPlay(!play);
       audio.onend = () => {
         return setPlay(false);
       };
-    } else if (play === true) {
+    } else if (play) {
       window.speechSynthesis.cancel();
       setPlay(!play);
     }
@@ -47,7 +52,7 @@ export function UserAudio() {
   }
 
   function handleScreen(step: "english" | "portuguese") {
-    if (window.speechSynthesis.speaking === true) {
+    if (window.speechSynthesis.speaking) {
       return;
     }
     setScreen(step);
@@ -65,10 +70,9 @@ export function UserAudio() {
     <>
       <form action={createCard} className="w-full px-3 sm:px-0 sm:w-auto">
         {screen === "english" && (
-          <textarea
-            className="min-w-full sm:min-w-[400px] h-28 bg-transparent border border-white outline-none rounded p-2"
+          <TextArea
             placeholder="Digite a frase"
-            ref={textRef}
+            textRef={textRef}
             value={text.firstPhrase}
             onChange={({ target }) =>
               setText((prevState) => ({ ...prevState, firstPhrase: target.value }))
@@ -79,10 +83,9 @@ export function UserAudio() {
         {screen === "portuguese" && (
           <div className="min-w-full sm:min-w-[400px]">
             <p className="text-gray-200 mb-1">{text.firstPhrase}</p>
-            <textarea
-              className="w-full h-28 bg-transparent border border-white outline-none rounded p-2"
+            <TextArea
               placeholder="Agora digite a tradução"
-              ref={textRef}
+              textRef={textRef}
               value={text.traduPhrase}
               onChange={({ target }) =>
                 setText((prevState) => ({ ...prevState, traduPhrase: target.value }))
@@ -93,13 +96,13 @@ export function UserAudio() {
 
         <div className="flex items-center justify-between px-1 my-2">
           {play ? (
-            <Button
+            <PlayerButton
               onClick={handleAudio}
               text="Stop"
               icon={<BsPauseCircleFill className="w-5 h-5" />}
             />
           ) : (
-            <Button
+            <PlayerButton
               onClick={handleAudio}
               text="Play"
               icon={<BsFillPlayCircleFill className="w-5 h-5" />}
@@ -112,43 +115,35 @@ export function UserAudio() {
             <option value={"en-US"}>Inglês - EUA</option>
             <option value={"pt-BR"}>Português - Brasil</option>
           </select>
-          <button
-            className="bg-red-600 px-2 py-1 rounded hover:brightness-90 hover:duration-200"
+          <Button
+            text="Limpar"
             type="button"
+            className="bg-red-600 w-auto px-3 py-1"
             onClick={clearText}
-          >
-            Limpar
-          </button>
+          />
         </div>
         <nav className="w-full flex items-center justify-between gap-4">
-          <button
-            onClick={() => handleScreen("english")}
+          <Button
+            text="Voltar"
             type="button"
+            className="bg-gray-600"
             disabled={screen === "english" ? true : false}
             style={{ opacity: screen === "english" ? 0.8 : 1 }}
-            className="bg-gray-600 w-full rounded-sm hover:brightness-90 hover:duration-200"
-          >
-            Voltar
-          </button>
+            onClick={() => handleScreen("english")}
+          />
           {screen === "english" ? (
-            <button
+            <Button
+              text="Adicionar tradução"
+              type="button"
+              className="bg-gray-500"
+              disabled={text.firstPhrase === "" ? true : false}
               onClick={(e) => {
                 e.preventDefault();
                 handleScreen("portuguese");
               }}
-              type="button"
-              disabled={text.firstPhrase == "" ? true : false}
-              className="bg-gray-500 w-full rounded-sm hover:brightness-90 hover:duration-200"
-            >
-              Adicionar tradução
-            </button>
+            />
           ) : (
-            <button
-              className="w-full bg-green-600 rounded-sm hover:brightness-90 hover:duration-200"
-              type="submit"
-            >
-              Salvar frase
-            </button>
+            <Button text="Salvar frase" type="submit" className="bg-green-600" />
           )}
         </nav>
       </form>

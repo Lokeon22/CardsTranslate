@@ -1,20 +1,17 @@
 import { ComponentProps } from "react";
-import { IconBaseProps } from "react-icons/lib/esm/iconBase";
+import { twMerge } from "tailwind-merge";
 
-export type ButtonProps = ComponentProps<"button">;
-interface BtnIconProps extends ButtonProps {
-  icon: IconBaseProps;
+type ButtonProps = ComponentProps<"button">;
+interface BtnProps extends ButtonProps {
   text: string;
 }
 
-export function Button({ icon, text, ...props }: BtnIconProps) {
+export function Button({ text, className, ...props }: BtnProps) {
   return (
     <button
-      className="flex items-center gap-2 hover:brightness-90 hover:duration-200"
-      type="button"
+      className={twMerge("w-full rounded-sm hover:brightness-90 hover:duration-200", className)}
       {...props}
     >
-      <>{icon}</>
       {text}
     </button>
   );
