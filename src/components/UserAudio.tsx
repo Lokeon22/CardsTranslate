@@ -2,6 +2,8 @@
 import { useState, useRef } from "react";
 import { BsFillPlayCircleFill, BsPauseCircleFill } from "react-icons/bs";
 
+import { Button } from "./Button";
+
 export function UserAudio() {
   const [play, setPlay] = useState<boolean>(false);
   const [language, setLanguage] = useState<string>("en-US");
@@ -66,7 +68,6 @@ export function UserAudio() {
           <textarea
             className="min-w-full sm:min-w-[400px] h-28 bg-transparent border border-white outline-none rounded p-2"
             placeholder="Digite a frase"
-            name="nome1"
             ref={textRef}
             value={text.firstPhrase}
             onChange={({ target }) =>
@@ -81,7 +82,6 @@ export function UserAudio() {
             <textarea
               className="w-full h-28 bg-transparent border border-white outline-none rounded p-2"
               placeholder="Agora digite a tradução"
-              name="nome2"
               ref={textRef}
               value={text.traduPhrase}
               onChange={({ target }) =>
@@ -93,27 +93,17 @@ export function UserAudio() {
 
         <div className="flex items-center justify-between px-1 my-2">
           {play ? (
-            <>
-              <button
-                onClick={handleAudio}
-                type="button"
-                className="flex items-center gap-2 hover:brightness-90 hover:duration-200"
-              >
-                <BsPauseCircleFill className="w-5 h-5" />
-                Stop
-              </button>
-            </>
+            <Button
+              onClick={handleAudio}
+              text="Stop"
+              icon={<BsPauseCircleFill className="w-5 h-5" />}
+            />
           ) : (
-            <>
-              <button
-                onClick={handleAudio}
-                type="button"
-                className="flex items-center gap-2 hover:brightness-90 hover:duration-200"
-              >
-                <BsFillPlayCircleFill className="w-5 h-5" />
-                Play
-              </button>
-            </>
+            <Button
+              onClick={handleAudio}
+              text="Play"
+              icon={<BsFillPlayCircleFill className="w-5 h-5" />}
+            />
           )}
           <select
             onChange={onChange}

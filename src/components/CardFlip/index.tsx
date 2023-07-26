@@ -22,7 +22,10 @@ export function CardFlip() {
             <h2 className="text-lg text-center overflow-x-auto">
               A little sympathy, I hope you can show me
             </h2>
-            <span onClick={handleFlip} className="mt-2 cursor-pointer">
+            <span
+              onClick={handleFlip}
+              className="text-gray-200 mt-2 cursor-pointer hover:brightness-90 hover:duration-200"
+            >
               ver tradução
             </span>
           </div>
