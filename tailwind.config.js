@@ -29,9 +29,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        changeOpacity: "changeOpacity 0.3s ease-in",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      keyframes: {
+        changeOpacity: {
+          "100%": { opacity: "1" },
+          "0%": { opacity: "0" },
+        },
       },
     },
   },

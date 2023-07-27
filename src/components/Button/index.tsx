@@ -9,7 +9,10 @@ interface BtnProps extends ButtonProps {
 export function Button({ text, className, ...props }: BtnProps) {
   return (
     <button
-      className={twMerge("w-full rounded-sm hover:brightness-90 hover:duration-200", className)}
+      className={twMerge(
+        "w-full h-8 text-white rounded hover:brightness-90 hover:duration-200",
+        className
+      )}
       {...props}
     >
       {text}

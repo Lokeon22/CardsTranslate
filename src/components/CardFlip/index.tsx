@@ -33,7 +33,7 @@ export function CardFlip({ n1, n2 }: { n1: string; n2: string }) {
 
   return (
     <>
-      <div className="min-w-min sm:w-96 h-56 px-2 sm:px-0 perspective">
+      <div className="w-full sm:w-60 xl:w-96 h-56 px-6 sm:px-0 perspective">
         <div
           className="w-full h-full relative preserve-3d"
           style={{ transform: flip ? "rotateY(180deg)" : "rotateY(0deg)" }}

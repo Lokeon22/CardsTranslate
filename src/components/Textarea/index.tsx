@@ -8,7 +8,7 @@ interface TAProps extends TextAreaProps {
 export function TextArea({ textRef, ...props }: TAProps) {
   return (
     <textarea
-      className="w-full sm:min-w-[400px] h-28 bg-transparent border border-white outline-none rounded p-2 resize-none"
+      className="w-full sm:min-w-[400px] h-28 bg-white border border-gray-300 outline-none rounded p-2 resize-none"
       ref={textRef}
       {...props}
     />

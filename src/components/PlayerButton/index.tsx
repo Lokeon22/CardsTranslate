@@ -15,7 +15,7 @@ export function PlayerButton({ icon, text, ...props }: BtnIconProps) {
       {...props}
     >
       <>{icon}</>
-      {text}
+      <span className="font-medium">{text}</span>
     </button>
   );
 }
