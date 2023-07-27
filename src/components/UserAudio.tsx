@@ -68,7 +68,7 @@ export function UserAudio() {
 
   return (
     <>
-      <form action={createCard} className="w-full sm:max-w-xl px-1 sm:px-0 sm:w-auto">
+      <form action={createCard} className="w-full sm:max-w-xl sm:w-auto">
         {screen === "english" && (
           <TextArea
             placeholder="Digite a frase"
@@ -82,7 +82,7 @@ export function UserAudio() {
 
         {screen === "portuguese" && (
           <div className="min-w-full sm:min-w-[400px]">
-            <p className="w-max font-medium text-gray-700 border-b-[1px] border-blue-400 rounded-sm mb-2">
+            <p className="w-max font-medium text-gray-700 border-b-[1px] border-blue-400 rounded-sm my-2">
               {text.firstPhrase}
             </p>
             <TextArea
