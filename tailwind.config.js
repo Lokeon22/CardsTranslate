@@ -31,6 +31,9 @@ module.exports = {
     extend: {
       animation: {
         changeOpacity: "changeOpacity 0.3s ease-in",
+        moveWave1: "moveWave1 3s ease-in-out infinite alternate",
+        moveWave2: "moveWave2 3s 1.2s ease-in-out infinite alternate",
+        moveWave3: "moveWave3 3s 0.7s ease-in-out infinite alternate",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -40,6 +43,15 @@ module.exports = {
         changeOpacity: {
           "100%": { opacity: "1" },
           "0%": { opacity: "0" },
+        },
+        moveWave1: {
+          "100%": { transform: "translateX(-2000px)" },
+        },
+        moveWave2: {
+          "100%": { transform: "translateX(-1800px)" },
+        },
+        moveWave3: {
+          "100%": { transform: "translateX(-1600px)" },
         },
       },
     },

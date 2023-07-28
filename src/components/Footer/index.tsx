@@ -2,11 +2,13 @@ import { AiFillGithub, AiFillLinkedin, AiFillInstagram, AiFillYoutube } from "re
 
 import { Button } from "../Button";
 import { SocialsLinks } from "./SocialsLinks";
+import { Waves } from "./Waves";
 
 export function Footer() {
   return (
-    <footer className="mt-auto w-full h-full bg-gray-700 px-2 py-2.5 sm:py-5">
-      <div className="max-w-7xl mx-auto my-0 grid gap-2 grid-cols-3 sm:flex flex-row items-center justify-around text-gray-200">
+    <footer className="relative mt-auto w-full h-full bg-transparent sm:bg-[#3b727a] px-2 py-2.5 sm:py-5">
+      <Waves />
+      <div className="max-w-7xl mx-auto my-0 grid gap-2 grid-cols-3 sm:flex flex-row items-center justify-around text-white">
         <nav className="col-span-1">
           <h3 className="text-sm sm:text-base font-semibold text-center mb-1 sm:mb-1.5">
             Nossas Mídias
@@ -36,7 +38,7 @@ export function Footer() {
         </label>
         <Button
           type="button"
-          className="w-2/3 sm:w-auto mx-auto sm:mx-0 px-2 col-span-3 my-1.5 sm:my-0 bg-gray-500"
+          className="w-2/3 hidden sm:block sm:w-auto mx-auto sm:mx-0 px-2 col-span-3 my-1.5 sm:my-0 bg-[#42929c]"
           text="Entrar em contato"
         />
       </div>
