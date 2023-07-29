@@ -12,9 +12,9 @@ export default function MyCards() {
   ];
 
   return (
-    <section className="w-full h-full flex flex-col items-stretch sm:items-center sm:h-screen bg-black text-white">
-      <h2 className="text-3xl my-20">Cards page</h2>
-      <div className="w-full max-w-7xl flex flex-row items-center justify-center flex-wrap gap-4 px-2">
+    <section className="w-full h-full bg-gray-200 animate-changeOpDire">
+      <h2 className="text-start xl:text-center text-2xl my-5 px-4 font-semibold">Meus cards</h2>
+      <div className="max-w-7xl h-ful grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mx-auto my-4 px-2 sm:px-4">
         {data.map((dt, index) => {
           return <CardFlip key={index} n1={dt.n1} n2={dt.n2} />;
         })}

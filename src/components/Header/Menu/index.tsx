@@ -28,7 +28,7 @@ export function Menu() {
       {menu ? (
         <nav className="relative w-auto">
           <Image onClick={handleMenu} className="w-4 h-4 mr-1" src={close} alt="Menu close icon" />
-          <ul className="absolute top-11 -right-2 px-2 pb-3 flex flex-col gap-3 w-screen bg-black animate-changeOpacity">
+          <ul className="z-10 absolute top-11 -right-2 px-2 pb-3 flex flex-col gap-3 w-screen bg-black animate-changeOpacity">
             <Links text="Home" url="/" setMenu={setMenu} />
             <Links text="Meus cards" url="/mycards" setMenu={setMenu} />
             <Links text="Perfil" url="/" setMenu={setMenu} />

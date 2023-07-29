@@ -3,7 +3,7 @@ import { UserAudio } from "@/components/UserAudio";
 
 export default function Home() {
   return (
-    <main className="w-full h-full max-w-7xl mx-auto my-0 px-2 sm:px-4">
+    <main className="w-full h-full max-w-7xl mx-auto my-0 px-2 sm:px-4 animate-changeOpDire max-[331px]:mb-10">
       <h2 className="text-lg sm:text-2xl mt-5 sm:mt-8 mb-2 font-semibold">
         Somos uma plataforma feita para você. Aprenda utilizando o método de flash cards e áudio.
       </h2>

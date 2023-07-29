@@ -33,17 +33,19 @@ export function CardFlip({ n1, n2 }: { n1: string; n2: string }) {
 
   return (
     <>
-      <div className="w-full sm:w-60 xl:w-96 h-56 px-6 sm:px-0 perspective">
+      <div className="w-full h-48 perspective">
         <div
           className="w-full h-full relative preserve-3d"
           style={{ transform: flip ? "rotateY(180deg)" : "rotateY(0deg)" }}
         >
           <div
-            className="absolute w-full h-full p-1 sm:p-2.5 text-center sm:text-justify backface-hidden overflow-hidden rounded-xl flex flex-col items-center justify-center bg-blue-700"
+            className="absolute w-full h-full p-1 sm:p-2.5 text-center sm:text-justify backface-hidden overflow-hidden rounded-xl flex flex-col items-center justify-center bg-[#448691]"
             id="card_front"
           >
-            <h2 className="text-lg text-center overflow-x-auto">{n1}</h2>
-            <div className="flex gap-3 items-center justify-center mt-2">
+            <h2 className="text-base text-center overflow-x-auto text-white scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+              {n1}
+            </h2>
+            <div className="flex gap-3 items-center justify-center mt-2 text-white">
               {play ? (
                 <PlayerButton
                   onClick={stopPhrase}
@@ -59,22 +61,24 @@ export function CardFlip({ n1, n2 }: { n1: string; n2: string }) {
               )}
               <span
                 onClick={handleFlip}
-                className="text-gray-200 cursor-pointer hover:brightness-90 hover:duration-200"
+                className="text-gray-100 cursor-pointer hover:brightness-90 hover:duration-200"
               >
                 ver tradução
               </span>
             </div>
           </div>
           <div
-            className="w-full h-full backface-hidden overflow-hidden rounded-xl my-rotate-y-180 bg-blue-500 px-2.5 sm:px-0"
+            className="w-full h-full backface-hidden overflow-hidden rounded-xl my-rotate-y-180 bg-[#5ea0aa] px-2.5 sm:px-0"
             id="card_back"
           >
             <div
               onClick={handleFlip}
-              className="w-full h-full p-0 sm:p-2.5 flex flex-col justify-center cursor-pointer overflow-x-auto"
+              className="w-full h-full p-0 sm:p-2.5 flex flex-col justify-center cursor-pointer"
               id="card_content"
             >
-              <h2 className="text-lg text-center">{n2}</h2>
+              <h2 className="px-1 text-base text-center text-white overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+                {n2}
+              </h2>
             </div>
           </div>
         </div>
