@@ -14,7 +14,7 @@ export function Menu() {
 
   return (
     <>
-      <ul className="hidden sm:flex items-center gap-5 text-sm">
+      <ul className="hidden sm:flex items-center gap-5 text-sm uppercase">
         <li className="hover:brightness-90 hover:duration-200">
           <Link href={"/"}>Home</Link>
         </li>

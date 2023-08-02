@@ -38,7 +38,7 @@ export function Footer() {
         </label>
         <Button
           type="button"
-          className="w-2/3 hidden sm:block sm:w-auto mx-auto sm:mx-0 px-2 col-span-3 my-1.5 sm:my-0 bg-[#42929c]"
+          className="w-2/3 hidden sm:block sm:w-auto mx-auto sm:mx-0 px-2 col-span-3 my-1.5 sm:my-0 bg-[#42929c] uppercase text-sm"
           text="Entrar em contato"
         />
       </div>

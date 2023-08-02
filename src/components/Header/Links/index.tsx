@@ -10,7 +10,7 @@ export function Links({
   url: string;
 }) {
   return (
-    <li className="hover:brightness-90 hover:duration-200">
+    <li className="hover:brightness-90 hover:duration-200 uppercase text-sm">
       <Link onClick={() => setMenu(false)} href={url}>
         {text}
       </Link>

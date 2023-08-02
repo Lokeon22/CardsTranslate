@@ -82,7 +82,7 @@ export function UserAudio() {
 
         {screen === "portuguese" && (
           <div className="min-w-full sm:min-w-[400px]">
-            <p className="w-max font-medium text-gray-700 border-b-[1px] border-blue-400 rounded-sm my-2">
+            <p className="w-max italic text-gray-800 leading-4 border-b-[1px] border-[#6cc8d6] rounded-sm mt-3 mb-2">
               {text.firstPhrase}
             </p>
             <TextArea
@@ -122,7 +122,7 @@ export function UserAudio() {
           <Button
             text="Limpar"
             type="button"
-            className="bg-red-600 w-auto sm:w-1/5 px-2 py-1"
+            className="bg-red-700 w-auto sm:w-1/5 px-2 py-1"
             onClick={clearText}
           />
         </section>
@@ -130,7 +130,7 @@ export function UserAudio() {
           <Button
             text="Voltar"
             type="button"
-            className="bg-blue-600"
+            className="bg-[#3b727a]"
             disabled={screen === "english" ? true : false}
             style={{ opacity: screen === "english" ? 0.8 : 1 }}
             onClick={() => handleScreen("english")}
@@ -139,7 +139,7 @@ export function UserAudio() {
             <Button
               text="Adicionar tradução"
               type="button"
-              className="bg-blue-400"
+              className="bg-[#42929c]"
               disabled={text.firstPhrase === "" ? true : false}
               onClick={(e) => {
                 e.preventDefault();
@@ -147,7 +147,7 @@ export function UserAudio() {
               }}
             />
           ) : (
-            <Button text="Salvar frase" type="submit" className="bg-blue-400" />
+            <Button text="Salvar frase" type="submit" className="bg-[#42929c]" />
           )}
         </nav>
       </form>
