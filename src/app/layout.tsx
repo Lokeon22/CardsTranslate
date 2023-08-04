@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { UserProvider } from "@/context/userContext";
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -16,9 +17,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`bg-gray-200 flex flex-col min-h-screen ${rbt.className}`}>
-        <Header />
-        {children}
-        <Footer />
+        <UserProvider>
+          <Header />
+          {children}
+          <Footer />
+        </UserProvider>
       </body>
     </html>
   );
