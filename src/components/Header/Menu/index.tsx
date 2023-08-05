@@ -1,19 +1,30 @@
 "use client";
-import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
 import { useAuth } from "@/context/userContext";
-import { FiUser } from "react-icons/fi";
+import { destroyCookie } from "nookies";
+import { useRouter } from "next/navigation";
+import { FiUser, FiLogOut } from "react-icons/fi";
+
+import Link from "next/link";
+import Image from "next/image";
 
 import close from "@/assets/icons/close.svg";
 import hamburger from "@/assets/icons/menu.svg";
 import { Links } from "../Links";
 
 export function Menu() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
+  const { push } = useRouter();
   const [menu, setMenu] = useState<boolean>(false);
 
   const handleMenu = () => setMenu(!menu);
+
+  const logoutCookie = () => {
+    destroyCookie(null, "lk_user", { path: "/" }), destroyCookie(null, "lk_token", { path: "/" });
+    setUser(undefined);
+    menu && setMenu(false);
+    return push("/");
+  };
 
   return (
     <>
@@ -29,6 +40,12 @@ export function Menu() {
             <li className="hover:brightness-90 hover:duration-200">
               <Link href={"/mycards"}>Meus cards</Link>
             </li>
+            <li
+              onClick={logoutCookie}
+              className="hover:brightness-90 hover:duration-200 hover:cursor-pointer"
+            >
+              <FiLogOut className="w-5 h-5" />
+            </li>
           </ul>
           {menu ? (
             <nav className="relative w-auto">
@@ -42,6 +59,12 @@ export function Menu() {
                 <Links text="Home" url="/" setMenu={setMenu} />
                 <Links text="Meus cards" url="/mycards" setMenu={setMenu} />
                 <Links text="Perfil" url="/" setMenu={setMenu} />
+                <li
+                  onClick={logoutCookie}
+                  className="hover:brightness-90 hover:duration-200 hover:cursor-pointer"
+                >
+                  <FiLogOut className="w-5 h-5" />
+                </li>
               </ul>
             </nav>
           ) : (
