@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BsFillPlayCircleFill, BsPauseCircleFill } from "react-icons/bs";
 import { PlayerButton } from "../PlayerButton";
 
-export function CardFlip({ n1, n2 }: { n1: string; n2: string }) {
+export function CardFlip({ english, portuguese }: { english: string; portuguese: string }) {
   const [flip, setFlip] = useState<boolean>(false);
   const [play, setPlay] = useState<boolean>(false);
 
@@ -15,7 +15,7 @@ export function CardFlip({ n1, n2 }: { n1: string; n2: string }) {
   }
 
   function playPhrase() {
-    const audio = new SpeechSynthesisUtterance(n1);
+    const audio = new SpeechSynthesisUtterance(english);
     if (!play && !window.speechSynthesis.speaking) {
       audio.lang = "en-US";
       window.speechSynthesis.speak(audio);
@@ -43,7 +43,7 @@ export function CardFlip({ n1, n2 }: { n1: string; n2: string }) {
             id="card_front"
           >
             <h2 className="text-base text-center overflow-x-auto text-white scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-              {n1}
+              {english}
             </h2>
             <div className="flex gap-3 items-center justify-center mt-2 text-white">
               {play ? (
@@ -77,7 +77,7 @@ export function CardFlip({ n1, n2 }: { n1: string; n2: string }) {
               id="card_content"
             >
               <h2 className="px-1 text-base text-center text-white overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                {n2}
+                {portuguese}
               </h2>
             </div>
           </div>

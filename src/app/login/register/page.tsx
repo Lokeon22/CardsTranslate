@@ -19,7 +19,7 @@ export default function Register() {
 
     if (!res.ok) console.log(resData.message);
 
-    if (res.ok || res.status === 200) return console.log("ok");
+    if (res.ok || res.status === 200) return redirect("/");
   }
 
   return (

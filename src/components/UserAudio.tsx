@@ -1,15 +1,26 @@
 "use client";
 import { useState, useRef } from "react";
+import { parseCookies } from "nookies";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/userContext";
+import { useTransition } from "react";
+
 import { BsFillPlayCircleFill, BsPauseCircleFill } from "react-icons/bs";
 
 import { PlayerButton } from "./PlayerButton";
 import { TextArea } from "./Textarea";
 import { Button } from "./Button";
+import { teste } from "@/app/test";
 
 export function UserAudio() {
+  const { push } = useRouter();
+  const { user } = useAuth();
+
   const [play, setPlay] = useState<boolean>(false);
   const [language, setLanguage] = useState<string>("en-US");
   const [screen, setScreen] = useState<"english" | "portuguese">("english");
+
+  let [isPending, startTransition] = useTransition();
 
   const [text, setText] = useState({
     firstPhrase: "",
@@ -58,12 +69,28 @@ export function UserAudio() {
     setScreen(step);
   }
 
-  function createCard() {
-    if (text.traduPhrase == "") {
-      return;
+  async function createCard() {
+    const { lk_token: token } = parseCookies();
+
+    if (text.firstPhrase === "" || text.traduPhrase === "") {
+      return alert("Preencha todos os campos");
     }
-    alert("Card adicionado");
-    window.location.reload();
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/card/create`, {
+      method: "POST",
+      body: JSON.stringify({
+        english: text.firstPhrase,
+        portuguese: text.traduPhrase,
+      }),
+      headers: {
+        Authorization: "Bearer " + `${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data: { message: string } = await res.json();
+
+    !res.ok ? alert(data.message) : alert(data.message);
   }
 
   return (
@@ -143,11 +170,16 @@ export function UserAudio() {
               disabled={text.firstPhrase === "" ? true : false}
               onClick={(e) => {
                 e.preventDefault();
-                handleScreen("portuguese");
+                user ? handleScreen("portuguese") : alert("Crie sua conta");
               }}
             />
           ) : (
-            <Button text="Salvar frase" type="submit" className="bg-[#42929c]" />
+            <Button
+              onClick={() => startTransition(() => teste())}
+              text="Salvar frase"
+              type="submit"
+              className="bg-[#42929c]"
+            />
           )}
         </nav>
       </form>
