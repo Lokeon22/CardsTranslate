@@ -1,16 +1,15 @@
 import { CardFlip } from "@/components/CardFlip";
-import { cookies } from "next/headers";
+import { getUserToken } from "@/functions/getCookie";
 
 import Link from "next/link";
 import { Cards } from "@/@types/Cards";
 
 async function getAllCards(token: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/allcards`, {
+    next: { revalidate: 60 * 60 * 24 },
     headers: {
-      "Content-Type": "application/json",
       Authorization: "Bearer " + `${token}`,
     },
-    cache: "no-store",
   });
 
   const data: Cards[] = await res.json();
@@ -19,8 +18,8 @@ async function getAllCards(token: string) {
 }
 
 export default async function MyCards() {
-  const token = cookies().get("lk_token");
-  const { data } = await getAllCards(token?.value as string);
+  const token = getUserToken();
+  const { data } = await getAllCards(token as string);
 
   return (
     <section className="w-full h-full bg-gray-200 animate-changeOpDire">
@@ -40,9 +39,7 @@ export default async function MyCards() {
             return <CardFlip key={index} english={dt.english} portuguese={dt.portuguese} />;
           })
         ) : (
-          <>
-            <h2>Nenhum card encontrado</h2>
-          </>
+          <h2>Nenhum card encontrado</h2>
         )}
       </div>
     </section>

@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { setCookie, parseCookies } from "nookies";
 
 import { UserLogin, UserProps } from "@/@types/User";
@@ -14,6 +14,7 @@ interface UserContextProps {
 const UserContext = createContext({} as UserContextProps);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
+  const { push } = useRouter();
   const [user, setUser] = useState<UserProps>();
 
   useEffect(() => {
@@ -53,8 +54,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       });
 
       setUser(user);
-
-      return redirect("/");
+      return push("/");
     }
   }
 

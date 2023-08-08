@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import { create } from "./actions";
 import { UserAudio } from "@/components/UserAudio";
 
 export default function Home() {
@@ -17,7 +17,9 @@ export default function Home() {
       <h3 className="text-xl sm:text-2xl font-medium mt-4 sm:mt-6 mb-2 relative before:content-[''] before:border-0 before:bg-[#3b727a] before:px-[3px] before:mr-2">
         Crie seu flash card
       </h3>
-      <UserAudio />
+      <form action={create} className="w-full sm:max-w-xl sm:w-auto">
+        <UserAudio />
+      </form>
     </main>
   );
 }
