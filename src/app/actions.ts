@@ -31,4 +31,9 @@ async function create(data: FormData) {
   }
 }
 
-export { create };
+async function handleUpdate(data: FormData) {
+  const teste = data.get("frase");
+  console.log(teste);
+}
+
+export { create, handleUpdate };

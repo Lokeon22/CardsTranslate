@@ -3,18 +3,25 @@ import { useState, useRef } from "react";
 import { setCookie } from "nookies";
 import { useAuth } from "@/context/userContext";
 import { TextArea } from "./Textarea";
+import { useRouter } from "next/navigation";
 
 import { BsFillPlayCircleFill, BsPauseCircleFill } from "react-icons/bs";
+import { RedirectUser } from "@/functions/redirectUser";
 
 import { PlayerButton } from "./PlayerButton";
 import { Button } from "./Button";
 
 export function UserAudio() {
   const { user } = useAuth();
+  const { push } = useRouter();
 
   const [play, setPlay] = useState<boolean>(false);
   const [language, setLanguage] = useState<string>("en-US");
   const [screen, setScreen] = useState<"english" | "portuguese">("english");
+  const [text, setText] = useState({
+    firtPhrase: "",
+    secondPhrase: "",
+  });
 
   const textRef = useRef() as React.MutableRefObject<HTMLTextAreaElement>;
 
@@ -22,8 +29,10 @@ export function UserAudio() {
     const speaking = window.speechSynthesis.speaking;
     if (textRef.current.value !== "" && !speaking && screen === "english") {
       textRef.current.value = "";
+      text.firtPhrase = "";
     } else if (textRef.current.value !== "" && !speaking && screen === "portuguese") {
       textRef.current.value = "";
+      text.secondPhrase = "";
     } else {
       return;
     }
@@ -50,9 +59,8 @@ export function UserAudio() {
   }
 
   function handleScreen(step: "english" | "portuguese") {
-    if (window.speechSynthesis.speaking) {
-      return;
-    }
+    if (window.speechSynthesis.speaking) return;
+
     setScreen(step);
     setCookie(null, "en", textRef.current.value, {
       maxAge: 30,
@@ -63,15 +71,31 @@ export function UserAudio() {
   return (
     <>
       {screen === "english" && (
-        <TextArea placeholder="Digite a frase" textRef={textRef} name="first" />
+        <TextArea
+          placeholder="Digite a frase"
+          value={text.firtPhrase}
+          onChange={({ target }) =>
+            setText((prevState) => ({ ...prevState, firtPhrase: target.value }))
+          }
+          textRef={textRef}
+          name="first"
+        />
       )}
 
       {screen === "portuguese" && (
         <div className="min-w-full sm:min-w-[400px]">
-          <p className="w-max italic text-gray-800 leading-4 border-b-[1px] border-[#6cc8d6] rounded-sm mt-3 mb-2">
-            oi
+          <p className="w-max text-gray-800 leading-4 border-b-[1px] border-[#6cc8d6] rounded-sm mt-3 mb-2">
+            {text.firtPhrase}
           </p>
-          <TextArea placeholder="Agora digite a tradução" textRef={textRef} name="second" />
+          <TextArea
+            placeholder="Agora digite a tradução"
+            value={text.secondPhrase}
+            onChange={({ target }) =>
+              setText((prevState) => ({ ...prevState, secondPhrase: target.value }))
+            }
+            textRef={textRef}
+            name="second"
+          />
         </div>
       )}
       <section className="flex items-center justify-between gap-1 px-1 my-2">
@@ -118,10 +142,10 @@ export function UserAudio() {
             text="Adicionar tradução"
             type="button"
             className="bg-[#42929c]"
-            //disabled={text.firstPhrase === "" ? true : false}
+            disabled={text.firtPhrase === "" ? true : false}
             onClick={(e) => {
               e.preventDefault();
-              user ? handleScreen("portuguese") : alert("Crie sua conta");
+              user ? handleScreen("portuguese") : RedirectUser(push);
             }}
           />
         )}

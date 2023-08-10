@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 import { BsFillPlayCircleFill, BsPauseCircleFill } from "react-icons/bs";
 import { PlayerButton } from "../PlayerButton";
 
@@ -8,9 +9,7 @@ export function CardFlip({ english, portuguese }: { english: string; portuguese:
   const [play, setPlay] = useState<boolean>(false);
 
   function handleFlip() {
-    if (window.speechSynthesis.speaking) {
-      return;
-    }
+    if (window.speechSynthesis.speaking) return;
     setFlip(!flip);
   }
 
@@ -42,6 +41,7 @@ export function CardFlip({ english, portuguese }: { english: string; portuguese:
             className="absolute w-full h-full p-1 sm:p-2.5 text-center sm:text-justify backface-hidden overflow-hidden rounded-xl flex flex-col items-center justify-center bg-[#448691]"
             id="card_front"
           >
+            <AiOutlineEdit className="w-[22px] h-[22px] absolute text-white right-1.5 top-1.5 cursor-pointer hover:brightness-90 hover:duration-200" />
             <h2 className="text-base text-center overflow-x-auto text-white scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
               {english}
             </h2>
