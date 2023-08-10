@@ -3,7 +3,7 @@ import { cookies } from "next/dist/client/components/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-async function create(data: FormData) {
+export async function create(data: FormData) {
   "use server";
   const token = cookies().get("lk_token");
   //get first phrase value from cookie
@@ -31,9 +31,6 @@ async function create(data: FormData) {
   }
 }
 
-async function handleUpdate(data: FormData) {
-  const teste = data.get("frase");
-  console.log(teste);
+export async function userLogout() {
+  revalidatePath("/mycards");
 }
-
-export { create, handleUpdate };

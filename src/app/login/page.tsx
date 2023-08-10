@@ -16,8 +16,8 @@ export default function Login() {
         url="/login/register"
         btnText="Entrar"
       >
-        <Input text="Email" name="email" type="text" />
-        <Input text="Senha" name="password" type="password" />
+        <Input text="Email" name="email" type="text" required />
+        <Input text="Senha" name="password" type="password" required />
       </LoginContainer>
     </main>
   );

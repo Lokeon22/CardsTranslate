@@ -1,10 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { useAuth } from "@/context/userContext";
 import { destroyCookie } from "nookies";
 import { useRouter } from "next/navigation";
-import { FiUser, FiLogOut } from "react-icons/fi";
+import { userLogout } from "@/app/actions";
 
+import { FiUser, FiLogOut } from "react-icons/fi";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -16,6 +17,7 @@ export function Menu() {
   const { user, setUser } = useAuth();
   const { push } = useRouter();
   const [menu, setMenu] = useState<boolean>(false);
+  let [isPending, startTransition] = useTransition();
 
   const handleMenu = () => setMenu(!menu);
 
@@ -23,7 +25,7 @@ export function Menu() {
     destroyCookie(null, "lk_user", { path: "/" }), destroyCookie(null, "lk_token", { path: "/" });
     setUser(undefined);
     menu && setMenu(false);
-    return push("/");
+    push("/");
   };
 
   return (
@@ -41,7 +43,10 @@ export function Menu() {
               <Link href={"/mycards"}>Meus cards</Link>
             </li>
             <li
-              onClick={logoutCookie}
+              onClick={() => {
+                logoutCookie();
+                startTransition(() => userLogout());
+              }}
               className="hover:brightness-90 hover:duration-200 hover:cursor-pointer"
             >
               <FiLogOut className="w-5 h-5" />
