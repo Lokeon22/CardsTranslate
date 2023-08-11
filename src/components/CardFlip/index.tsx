@@ -1,12 +1,30 @@
 "use client";
 import { useState } from "react";
-import { AiOutlineEdit } from "react-icons/ai";
 import { BsFillPlayCircleFill, BsPauseCircleFill } from "react-icons/bs";
-import { PlayerButton } from "../PlayerButton";
+import { updateCard } from "@/app/actions";
 
-export function CardFlip({ english, portuguese }: { english: string; portuguese: string }) {
+import { PlayerButton } from "../PlayerButton";
+import { InputUpdate } from "./InputUpdate";
+import { Cards } from "@/@types/Cards";
+
+interface ICardFlip {
+  id: number;
+  english: string;
+  portuguese: string;
+  allCards: Cards[];
+}
+
+export function CardFlip({ id, english, portuguese, allCards }: ICardFlip) {
   const [flip, setFlip] = useState<boolean>(false);
   const [play, setPlay] = useState<boolean>(false);
+
+  const [front, setFront] = useState<boolean>(false);
+  const [back, setBack] = useState<boolean>(false);
+
+  const [input, setInput] = useState({
+    front_card: "",
+    back_card: "",
+  });
 
   function handleFlip() {
     if (window.speechSynthesis.speaking) return;
@@ -41,10 +59,31 @@ export function CardFlip({ english, portuguese }: { english: string; portuguese:
             className="absolute w-full h-full p-1 sm:p-2.5 text-center sm:text-justify backface-hidden overflow-hidden rounded-xl flex flex-col items-center justify-center bg-[#448691]"
             id="card_front"
           >
-            <AiOutlineEdit className="w-[22px] h-[22px] absolute text-white right-1.5 top-1.5 cursor-pointer hover:brightness-90 hover:duration-200" />
-            <h2 className="text-base text-center overflow-x-auto text-white scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-              {english}
-            </h2>
+            <InputUpdate state={front} setState={setFront} text={english}>
+              <input
+                onChange={({ target }) =>
+                  setInput((prev) => ({ ...prev, front_card: target.value }))
+                }
+                className="px-2 py-1 rounded outline-none"
+                type="text"
+              />
+              <button
+                onClick={() => {
+                  updateCard({
+                    en_front: input.front_card,
+                    id,
+                    allCards,
+                    pt_back: input.back_card,
+                  });
+                  setFront(false);
+                }}
+                className="px-1 bg-gray-300 rounded text-slate-700"
+                type="submit"
+              >
+                salvar
+              </button>
+            </InputUpdate>
+
             <div className="flex gap-3 items-center justify-center mt-2 text-white">
               {play ? (
                 <PlayerButton
@@ -72,13 +111,34 @@ export function CardFlip({ english, portuguese }: { english: string; portuguese:
             id="card_back"
           >
             <div
-              onClick={handleFlip}
-              className="w-full h-full p-0 sm:p-2.5 flex flex-col justify-center cursor-pointer"
+              onClick={(e) => e.currentTarget === e.target && handleFlip()}
+              className="w-full h-full p-4 sm:p-2.5 flex flex-col justify-center cursor-pointer"
               id="card_content"
             >
-              <h2 className="px-1 text-base text-center text-white overflow-x-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-                {portuguese}
-              </h2>
+              <InputUpdate state={back} setState={setBack} text={portuguese}>
+                <input
+                  onChange={({ target }) =>
+                    setInput((prev) => ({ ...prev, back_card: target.value }))
+                  }
+                  className="px-2 py-1 rounded outline-none"
+                  type="text"
+                />
+                <button
+                  onClick={() => {
+                    updateCard({
+                      pt_back: input.back_card,
+                      id,
+                      allCards,
+                      en_front: input.front_card,
+                    });
+                    setBack(false);
+                  }}
+                  className="px-1 bg-gray-300 rounded text-slate-700"
+                  type="submit"
+                >
+                  salvar
+                </button>
+              </InputUpdate>
             </div>
           </div>
         </div>
