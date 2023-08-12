@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { UserProvider } from "@/context/userContext";
+import { DeleteCardProvider } from "@/context/deleteCardContext";
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -18,9 +19,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`bg-gray-200 flex flex-col min-h-screen ${rbt.className}`}>
         <UserProvider>
-          <Header />
-          {children}
-          <Footer />
+          <DeleteCardProvider>
+            <Header />
+            {children}
+            <Footer />
+          </DeleteCardProvider>
         </UserProvider>
       </body>
     </html>

@@ -59,7 +59,7 @@ export function CardFlip({ id, english, portuguese, allCards }: ICardFlip) {
             className="absolute w-full h-full p-1 sm:p-2.5 text-center sm:text-justify backface-hidden overflow-hidden rounded-xl flex flex-col items-center justify-center bg-[#448691]"
             id="card_front"
           >
-            <InputUpdate state={front} setState={setFront} text={english}>
+            <InputUpdate state={front} setState={setFront} text={english} id={id}>
               <input
                 onChange={({ target }) =>
                   setInput((prev) => ({ ...prev, front_card: target.value }))
@@ -115,7 +115,7 @@ export function CardFlip({ id, english, portuguese, allCards }: ICardFlip) {
               className="w-full h-full p-4 sm:p-2.5 flex flex-col justify-center cursor-pointer"
               id="card_content"
             >
-              <InputUpdate state={back} setState={setBack} text={portuguese}>
+              <InputUpdate state={back} setState={setBack} text={portuguese} id={id}>
                 <input
                   onChange={({ target }) =>
                     setInput((prev) => ({ ...prev, back_card: target.value }))

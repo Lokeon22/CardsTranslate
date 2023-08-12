@@ -62,3 +62,20 @@ export async function updateCard({ allCards, id, en_front, pt_back }: updateCard
 
   res.ok ? revalidatePath("/mycards") : console.log("ERROR to update");
 }
+
+export async function deleteCard({ id }: { id: number[] }) {
+  "use server";
+  const token = cookies().get("lk_token");
+
+  const cards_ids = JSON.stringify(id);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/card/remove?id=${cards_ids}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + `${token?.value}`,
+    },
+  });
+
+  res.ok ? revalidatePath("/mycards") : console.log("ERROR to delete");
+}
