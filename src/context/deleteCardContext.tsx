@@ -5,12 +5,15 @@ interface deleteContextProps {
   delcard: number[];
   setDelcard: React.Dispatch<React.SetStateAction<number[]>>;
   handleChange: ({ e, id }: { e: React.ChangeEvent<HTMLInputElement>; id: number }) => void;
+  appear: boolean;
+  setAppear: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const DeleteCardContext = createContext({} as deleteContextProps);
 
 export const DeleteCardProvider = ({ children }: { children: React.ReactNode }) => {
   const [delcard, setDelcard] = useState<number[]>([]);
+  const [appear, setAppear] = useState<boolean>(false);
 
   const handleChange = ({ e, id }: { e: React.ChangeEvent<HTMLInputElement>; id: number }) => {
     if (e.target.checked) {
@@ -22,7 +25,7 @@ export const DeleteCardProvider = ({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <DeleteCardContext.Provider value={{ delcard, setDelcard, handleChange }}>
+    <DeleteCardContext.Provider value={{ delcard, setDelcard, handleChange, appear, setAppear }}>
       {children}
     </DeleteCardContext.Provider>
   );

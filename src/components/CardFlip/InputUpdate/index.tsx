@@ -10,7 +10,7 @@ interface InputUpdateProps {
 }
 
 export function InputUpdate({ state, setState, text, children, id }: InputUpdateProps) {
-  const { handleChange } = useCard();
+  const { handleChange, appear } = useCard();
 
   return (
     <>
@@ -33,12 +33,15 @@ export function InputUpdate({ state, setState, text, children, id }: InputUpdate
         <div className="flex w-max gap-1">{children}</div>
       ) : (
         <>
-          <input
-            onChange={(e) => handleChange({ e, id })}
-            className="absolute left-1.5 top-1.5"
-            type="checkbox"
-            value={text}
-          />
+          {appear && (
+            <input
+              onChange={(e) => handleChange({ e, id })}
+              className="absolute left-1.5 top-1.5 min-w-[20px] min-h-[20px]"
+              type="checkbox"
+              value={text}
+            />
+          )}
+
           <p className="mx-auto my-0 text-base text-center overflow-x-auto text-white scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
             {text}
           </p>
