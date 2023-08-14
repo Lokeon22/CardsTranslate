@@ -4,6 +4,9 @@ import { Roboto } from "next/font/google";
 import { UserProvider } from "@/context/userContext";
 import { DeleteCardProvider } from "@/context/deleteCardContext";
 
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -25,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Footer />
           </DeleteCardProvider>
         </UserProvider>
+        <ToastContainer />
       </body>
     </html>
   );

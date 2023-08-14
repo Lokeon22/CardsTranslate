@@ -45,7 +45,10 @@ export default async function MyCards({
           </Link>
         </div>
 
-        <nav className="flex items-center gap-3 mt-2 sm:mt-0">
+        <nav
+          style={{ display: data.length > 7 || page > 1 ? "flex" : "none" }}
+          className="items-center gap-3 mt-2 sm:mt-0"
+        >
           <Link
             className="px-4 py-1.5 w-max text-sm bg-gray-400 text-gray-200 rounded cursor-pointer"
             style={{ pointerEvents: page <= 1 ? "none" : "auto", opacity: page <= 1 ? 0.7 : 1 }}

@@ -1,5 +1,6 @@
 "use client";
 import { useCard } from "@/context/deleteCardContext";
+import { toast } from "react-toastify";
 import { deleteCard } from "@/app/actions";
 
 export function ButtonDelete() {
@@ -7,12 +8,25 @@ export function ButtonDelete() {
 
   const handleAppear = () => setAppear(!appear);
 
+  const notify = () =>
+    toast.success("Card deletado", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
   function handleDelCard(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (delcard.length > 0) {
       deleteCard({ id: delcard });
       setDelcard([]);
       setAppear(false);
+      notify();
     } else {
       alert("Selecione algum card para deletar");
     }
