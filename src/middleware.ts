@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 
-export const user_route = ["/mycards"];
+export const user_route = ["/mycards", "/chat"];
 
 export default function middleware(req: NextRequest) {
   let verify = req.cookies.get("lk_user");

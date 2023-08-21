@@ -10,7 +10,7 @@ export default function Home() {
       </h2>
       <p className="text-base mt-0.5 font-normal">
         Você também pode praticar se conectando com outros usuários através do nosso chat{" "}
-        <Link className="text-blue-500 hover:brightness-90 hover:duration-200" href={"/"}>
+        <Link className="text-blue-500 hover:brightness-90 hover:duration-200" href={"/chat"}>
           clicando aqui.
         </Link>
       </p>
