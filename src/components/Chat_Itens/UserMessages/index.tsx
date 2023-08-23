@@ -142,7 +142,7 @@ export function UserMessages({
       {chat ? (
         <>
           <div
-            className="p-1.5 flex items-center gap-2 cursor-pointer hover:bg-gray-500 hover:duration-200 hover:rounded-xl"
+            className="flex items-center gap-2 cursor-pointer hover:duration-200 hover:rounded-xl hover:brightness-90 w-max"
             id="image_container"
           >
             <Image
@@ -182,7 +182,7 @@ export function UserMessages({
 
           <footer className="w-full flex gap-1 mt-auto" id="send_message">
             <input
-              className="w-full outline-none p-2 rounded-lg"
+              className="w-full outline-none py-2 px-3 rounded-2xl border-[#43818A] border"
               type="text"
               placeholder="Type a message"
               value={newMessage}
@@ -190,7 +190,7 @@ export function UserMessages({
             />
             <button
               onClick={(e) => handleSendMessage(e)}
-              className="px-3 sm:px-6 bg-gray-200 rounded hover:brightness-90 hover:duration-200"
+              className="px-3 sm:px-6 bg-gray-300 rounded hover:brightness-90 hover:duration-200"
             >
               &#9658;
             </button>
@@ -198,7 +198,7 @@ export function UserMessages({
         </>
       ) : (
         <>
-          <h2>Inicie uma conversa</h2>
+          <h2 className="text-xl font-medium">Inicie uma conversa</h2>
         </>
       )}
     </>

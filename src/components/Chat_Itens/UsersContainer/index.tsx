@@ -42,7 +42,7 @@ export function UsersContainer({ data, online, currentUser }: UsersCProps) {
         alt="avatar_default"
         priority
       />
-      <div className="flex flex-col leading-3">
+      <div className="hidden lg:flex flex-col leading-3">
         <p className="font-medium">{userData?.name}</p>
         <span className="text-sm">{online ? "Online" : "Offline"}</span>
       </div>
