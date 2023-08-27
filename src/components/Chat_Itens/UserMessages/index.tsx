@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/context/userContext";
 
+import { createPrivateChat } from "@/functions/privateChat";
+
 import Image from "next/image";
 import avatardefault from "@/assets/icons/avatardefault.png";
 
@@ -14,6 +16,9 @@ interface UserMessagesProps {
   token: string;
   setSendMessage: React.Dispatch<any>;
   receiveMessage: any;
+  setCurrentChat: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setUpdateChat: React.Dispatch<React.SetStateAction<boolean>>;
+  updateChat: boolean;
 }
 
 interface MessagesProps {
@@ -29,12 +34,18 @@ export function UserMessages({
   token,
   setSendMessage,
   receiveMessage,
+  setCurrentChat,
+  setUpdateChat,
+  updateChat,
 }: UserMessagesProps) {
   const { user } = useAuth();
 
   const [userData, setUserData] = useState<UserProps>();
   const [messages, setMessages] = useState<MessagesProps[]>([]);
   const [newMessage, setNewMessage] = useState("");
+
+  const [users, setUsers] = useState<UserProps[]>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   //key utilizada para atualizar as novas mensagens do banco ao trocar de usuario ou mandar mensagens
   const [key, setKey] = useState(false);
@@ -116,8 +127,39 @@ export function UserMessages({
     });
   }
 
+  //get all_users from chat_app
+  const getAllUsers = async () => {
+    setLoading(true);
+    try {
+      const user_chats: Chats[] = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/user`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }).then((res) => res.json());
+
+      const all_usuarios: UserProps[] = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/allusers`
+      ).then((res) => res.json());
+
+      // filtrando todos os usuarios no qual o usuario logado nunca conversou
+      const ids_chats: number[] = user_chats.reduce(
+        (ids, chat) => ids.concat(chat.receive_id as never, chat.sender_id as never),
+        []
+      );
+      const filtered = all_usuarios.filter((usuario) => !ids_chats.includes(usuario.id as never));
+
+      setLoading(false);
+      setUsers(filtered);
+    } catch (error) {
+      return console.log("Error on fetch");
+    }
+  };
+
   useEffect(() => {
-    if (chat !== undefined) getUserData();
+    if (chat !== undefined) {
+      getUserData();
+    }
   }, [chat, currentUser]);
 
   useEffect(() => {
@@ -149,9 +191,15 @@ export function UserMessages({
               width={60}
               height={60}
               className="rounded-full"
-              src={avatardefault}
-              alt="avatar_default"
+              src={
+                userData?.avatar
+                  ? `${process.env.NEXT_PUBLIC_API_URL}/files/${userData.avatar}`
+                  : avatardefault
+              }
+              alt="user avatar"
               priority
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcvmhRPQAGTwJs6OQmwAAAAABJRU5ErkJggg=="
             />
             <div className="flex flex-col leading-3">
               <p className="font-medium">{userData?.name}</p>
@@ -199,6 +247,60 @@ export function UserMessages({
       ) : (
         <>
           <h2 className="text-xl font-medium">Inicie uma conversa</h2>
+          <span className="my-2">Não conhece ninguem? Encontre novos usuarios agora!</span>
+          <button
+            onClick={getAllUsers}
+            className="bg-blue-600 text-white px-2 py-1 rounded w-max"
+            type="button"
+          >
+            buscar
+          </button>
+          {loading && <span>Buscando...</span>}
+          {users && <span className="font-medium text-2xl my-2">Usuarios</span>}
+          <div className="w-max px-2 sm:px-0 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+            {users &&
+              user &&
+              users.map((data) => {
+                return (
+                  <div className="flex items-center gap-1.5" key={data.id}>
+                    <Image
+                      width={60}
+                      height={60}
+                      className="rounded-full"
+                      src={
+                        data.avatar
+                          ? `${process.env.NEXT_PUBLIC_API_URL}/files/${data.avatar}`
+                          : avatardefault
+                      }
+                      alt="user avatar"
+                      priority
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcvmhRPQAGTwJs6OQmwAAAAABJRU5ErkJggg=="
+                    />
+                    <div className="flex flex-col gap-0.5">
+                      <p>{data.name}</p>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          createPrivateChat({
+                            sender_id: user.id,
+                            receive_id: data.id,
+                            token,
+                            setCurrentChat,
+                            setUpdateChat,
+                            updateChat,
+                          });
+                        }}
+                        className="px-2 py-0.5 bg-blue-400 rounded"
+                        type="button"
+                      >
+                        conversar
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
         </>
       )}
     </>

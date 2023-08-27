@@ -38,9 +38,15 @@ export function UsersContainer({ data, online, currentUser }: UsersCProps) {
         width={60}
         height={60}
         className="rounded-full"
-        src={avatardefault}
-        alt="avatar_default"
+        src={
+          userData?.avatar
+            ? `${process.env.NEXT_PUBLIC_API_URL}/files/${userData.avatar}`
+            : avatardefault
+        }
+        alt="user avatar"
         priority
+        placeholder="blur"
+        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcvmhRPQAGTwJs6OQmwAAAAABJRU5ErkJggg=="
       />
       <div className="hidden lg:flex flex-col leading-3">
         <p className="font-medium">{userData?.name}</p>

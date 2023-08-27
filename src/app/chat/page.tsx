@@ -16,6 +16,9 @@ export default function Chat() {
   const [chats, setChats] = useState<Chats[]>([]);
   const [currentChat, setCurrentChat] = useState<number>();
 
+  // just a key to reload a new chat on create
+  const [updateChat, setUpdateChat] = useState<boolean>(false);
+
   const [receiveUser, setReceiveUser] = useState<number>();
 
   const [onlineUsers, setOnlineUsers] = useState<OnlineUsersT[]>([]);
@@ -35,9 +38,7 @@ export default function Chat() {
 
   //send message to socket_server
   useEffect(() => {
-    if (sendMessage !== null) {
-      socket.emit("send-message", sendMessage);
-    }
+    if (sendMessage !== null) socket.emit("send-message", sendMessage);
   }, [sendMessage]);
 
   //receive message from socket_server
@@ -48,19 +49,23 @@ export default function Chat() {
   }, []);
 
   async function getChats() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/user`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-    });
-    const data: Chats[] = await res.json();
-    setChats(data);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat/user`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      });
+      const data: Chats[] = await res.json();
+      setChats(data);
+    } catch (error) {
+      return console.log("Error get chat");
+    }
   }
 
   useEffect(() => {
     getChats();
-  }, [user, onlineUsers]);
+  }, [user, onlineUsers, updateChat]);
 
   function checkOnlineStatus(chat: Chats) {
     const chatMember = chat.receive_id !== user?.id ? chat.receive_id : chat.sender_id;
@@ -75,9 +80,17 @@ export default function Chat() {
           className="bg-[#43818A] text-gray-100 p-0.5 sm:p-1 xl:p-3 h-full col-span-1 rounded-lg sm:rounded-2xl"
           id="all_users_container"
         >
-          <h2 className="text-xl sm:text-3xl text-center sm:text-justify font-medium mb-4 p-0.5 sm:p-3">
-            Chats
-          </h2>
+          <div className="flex flex-col gap-1 mb-2 p-0.5 sm:p-3">
+            <h2 className="text-xl sm:text-3xl text-center sm:text-justify font-medium">Chats</h2>
+            <button
+              onClick={() => currentChat !== undefined && setCurrentChat(undefined)}
+              type="button"
+              className="bg-black px-2 py-0.5 rounded hover:duration-200 hover:brightness-90"
+            >
+              Voltar
+            </button>
+          </div>
+
           <div
             className="flex flex-col gap-4 max-h-[500px] sm:max-h-[600px] overflow-y-auto scroll-smooth scrollbar-thin scrollbar-thumb-[#cedae4] scrollbar-thumb-rounded-full scrollbar-track-rounded-full"
             id="users"
@@ -110,10 +123,13 @@ export default function Chat() {
         >
           <UserMessages
             chat={currentChat}
+            setCurrentChat={setCurrentChat}
             currentUser={user?.id}
             token={token}
             setSendMessage={setSendMessage}
             receiveMessage={receiveMessage}
+            setUpdateChat={setUpdateChat}
+            updateChat={updateChat}
           />
         </div>
       </section>
