@@ -37,6 +37,9 @@ export function Menu() {
               <Link href={"/"}>Home</Link>
             </li>
             <li className="hover:brightness-90 hover:duration-200">
+              <Link href={"/profile"}>Perfil</Link>
+            </li>
+            <li className="hover:brightness-90 hover:duration-200">
               <Link href={"/chat"}>Chat</Link>
             </li>
             <li className="hover:brightness-90 hover:duration-200">
@@ -62,8 +65,9 @@ export function Menu() {
               />
               <ul className="z-10 absolute top-11 -right-2 px-2 pb-3 flex flex-col gap-3 w-screen bg-black animate-changeOpacity">
                 <Links text="Home" url="/" setMenu={setMenu} />
-                <Links text="Meus cards" url="/mycards" setMenu={setMenu} />
                 <Links text="Chat" url="/chat" setMenu={setMenu} />
+                <Links text="Meus cards" url="/mycards" setMenu={setMenu} />
+                <Links text="Perfil" url="/profile" setMenu={setMenu} />
                 <li
                   onClick={logoutCookie}
                   className="hover:brightness-90 hover:duration-200 hover:cursor-pointer"

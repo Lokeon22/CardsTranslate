@@ -3,6 +3,7 @@ import { cookies } from "next/dist/client/components/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { Cards } from "@/@types/Cards";
+import { UserProps } from "@/@types/User";
 
 interface updateCardProps {
   id: number;
@@ -78,4 +79,46 @@ export async function deleteCard({ id }: { id: number[] }) {
   });
 
   res.ok ? revalidatePath("/mycards") : console.log("ERROR to delete");
+}
+
+export async function updateProfile(data: FormData) {
+  "use server";
+  const token = cookies().get("lk_token");
+  /*
+  const user: UserProps = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/details`, {
+    headers: {
+      Authorization: "Bearer " + token?.value,
+      "Content-Type": "application/json"
+    }
+  }).then(res => res.json()); */
+
+  const teste = data.get("name");
+  const avatarFile: any = data.get("avatar"); // Blob - Image wiht Size
+
+  try {
+    if (avatarFile !== null && avatarFile.size !== 0) {
+      const formData = new FormData();
+      formData.append("avatar", avatarFile);
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/avatar`, {
+        method: "PATCH",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + token?.value,
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        revalidatePath("/profile");
+        revalidatePath("/chat");
+      }
+
+      return console.log(data.message);
+    }
+  } catch (error) {
+    return console.log(error);
+  }
+  console.log(avatarFile.size);
 }
