@@ -84,16 +84,19 @@ export async function deleteCard({ id }: { id: number[] }) {
 export async function updateProfile(data: FormData) {
   "use server";
   const token = cookies().get("lk_token");
-  /*
+
   const user: UserProps = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/details`, {
     headers: {
       Authorization: "Bearer " + token?.value,
-      "Content-Type": "application/json"
-    }
-  }).then(res => res.json()); */
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json());
 
-  const teste = data.get("name");
+  const name = data.get("name");
+  const email = data.get("email");
   const avatarFile: any = data.get("avatar"); // Blob - Image wiht Size
+
+  if (name === "" && email === "" && avatarFile.size === 0) return;
 
   try {
     if (avatarFile !== null && avatarFile.size !== 0) {
@@ -110,15 +113,28 @@ export async function updateProfile(data: FormData) {
 
       const data = await res.json();
 
-      if (res.ok) {
-        revalidatePath("/profile");
-        revalidatePath("/chat");
-      }
-
       return console.log(data.message);
     }
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/update`, {
+      method: "PUT",
+      body: JSON.stringify({
+        name: name === "" ? user.name : name,
+        email: email === "" ? user.email : email,
+      }),
+      headers: {
+        Authorization: "Bearer " + token?.value,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (res.ok) {
+      revalidatePath("/profile");
+      revalidatePath("/chat");
+    }
+
+    return console.log(res);
   } catch (error) {
     return console.log(error);
   }
-  console.log(avatarFile.size);
 }
