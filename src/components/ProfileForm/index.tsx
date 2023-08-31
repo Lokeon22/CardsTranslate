@@ -9,6 +9,7 @@ import avatardefault from "@/assets/icons/avatardefault.png";
 
 import { InputIcon } from "./InputIcon";
 import { Button } from "../Button";
+import { notify } from "@/functions/notify";
 
 interface ProfileFormProps {
   children: React.ReactNode;
@@ -64,7 +65,12 @@ export function ProfileForm({ children, avatar }: ProfileFormProps) {
           onChange={handleChangeAvatar}
           name="avatar"
         />
-        <Button type="submit" text="Salvar" className="bg-[#42929c]" />
+        <Button
+          onClick={() => notify({ message: "Perfil atualizado", time: 1500 })}
+          type="submit"
+          text="Salvar"
+          className="bg-[#42929c]"
+        />
       </form>
     </>
   );

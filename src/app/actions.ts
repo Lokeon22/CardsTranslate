@@ -113,6 +113,11 @@ export async function updateProfile(data: FormData) {
 
       const data = await res.json();
 
+      if (res.ok) {
+        revalidatePath("/profile");
+        revalidatePath("/chat");
+      }
+
       return console.log(data.message);
     }
 
