@@ -20,15 +20,15 @@ export default async function Profile() {
 
   return (
     <main className="w-full h-full max-w-7xl mx-auto my-0 px-2 sm:px-4 animate-changeOpDire max-[331px]:mb-10">
-      <h2 className="text-2xl font-medium my-5">Suas informações</h2>
+      <h2 className="text-2xl font-medium my-2 sm:my-5">Suas informações</h2>
 
-      <section className="max-w-md flex flex-col flex-wrap gap-4">
+      <section className="max-w-4xl flex flex-col flex-wrap gap-4">
         {user && (
           <ProfileForm avatar={user.avatar}>
-            <div className="flex flex-col gap-1">
-              <h2 className="text-lg font-medium mb-2">{user?.name}</h2>
+            <div className="flex self-end items-end gap-3 sm:gap-4 p-1 bg-gray-100 rounded-b relative top-24 sm:top-12">
+              <h2 className="text-lg font-medium">{user?.name}</h2>
               <p className="text-sm sm:text-base">{user?.email}</p>
-              <p className="text-xs sm:text-sm">
+              <p className="text-xs sm:text-sm hidden :block">
                 <span className="text-gray-600">Entrou em:</span>{" "}
                 {Intl.DateTimeFormat("pt-BR").format(new Date(user?.created_at as Date))}
               </p>
