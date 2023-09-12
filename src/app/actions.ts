@@ -95,15 +95,63 @@ export async function updateProfile(data: FormData) {
   const name = data.get("name");
   const email = data.get("email");
   const avatarFile: any = data.get("avatar"); // Blob - Image wiht Size
+  const backgroundFile: any = data.get("background"); // Blob - Image with Size
 
-  if (name === "" && email === "" && avatarFile.size === 0) return;
+  if (name === "" && email === "" && avatarFile.size === 0 && backgroundFile.size === 0) return;
 
   try {
-    if (avatarFile !== null && avatarFile.size !== 0) {
+    if (avatarFile.size !== 0 && backgroundFile.size !== 0) {
+      const formDataAvatar = new FormData();
+      const formDataBg = new FormData();
+
+      formDataAvatar.append("avatar", avatarFile);
+      formDataBg.append("background", backgroundFile);
+
+      const res_avatar = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/avatar`, {
+        method: "PATCH",
+        body: formDataAvatar,
+        headers: {
+          Authorization: "Bearer " + token?.value,
+        },
+      }).then((res) => res.json());
+
+      const res_bg = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/background`, {
+        method: "PATCH",
+        body: formDataBg,
+        headers: {
+          Authorization: "Bearer " + token?.value,
+        },
+      }).then((res) => res.json());
+
+      revalidatePath("/profile");
+      revalidatePath("/chat");
+
+      return console.log(res_avatar.message + " " + res_bg.message);
+    } else if (avatarFile !== null && avatarFile.size !== 0) {
       const formData = new FormData();
       formData.append("avatar", avatarFile);
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/avatar`, {
+        method: "PATCH",
+        body: formData,
+        headers: {
+          Authorization: "Bearer " + token?.value,
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        revalidatePath("/profile");
+        revalidatePath("/chat");
+      }
+
+      return console.log(data.message);
+    } else if (backgroundFile !== null && backgroundFile.size !== 0) {
+      const formData = new FormData();
+      formData.append("background", backgroundFile);
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/background`, {
         method: "PATCH",
         body: formData,
         headers: {

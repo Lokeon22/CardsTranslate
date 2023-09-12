@@ -8,7 +8,9 @@ import bgdevil from "@/assets/icons/devil2.jpg";
 
 const getUserDetails = async (id: string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/${id}`, {
+      cache: "no-cache",
+    });
 
     const user: UserProps = await res.json();
 
@@ -34,7 +36,9 @@ export default async function UserProfile({ params }: { params: { id: string } }
               className="w-full h-full absolute rounded-xl"
               style={{ objectFit: "cover", objectPosition: "center" }}
               src={
-                user.avatar ? `${process.env.NEXT_PUBLIC_API_URL}/files/${user.avatar}` : bgdevil
+                user.background
+                  ? `${process.env.NEXT_PUBLIC_API_URL}/files/${user.background}`
+                  : bgdevil
               }
               alt="user_background"
               priority

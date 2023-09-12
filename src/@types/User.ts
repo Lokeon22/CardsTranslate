@@ -16,5 +16,6 @@ export type UserProps = {
   email: string;
   password: string;
   avatar: string | null;
+  background: string | null;
   created_at: Date;
 };
