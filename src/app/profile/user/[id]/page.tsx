@@ -28,12 +28,15 @@ export default async function UserProfile({ params }: { params: { id: string } }
     : avatardefault;
 
   return (
-    <main className="w-full h-full max-w-7xl mx-auto my-5 px-2 sm:px-4 animate-changeOpDire max-[331px]:mb-10">
-      <div className="flex justify-center sm:justify-start items-center gap-2 sm:gap-2.5 flex-wrap relative">
+    <main className="w-full h-full max-w-7xl mx-auto my-5 px-1 sm:px-2 lg:px-4 animate-changeOpDire max-[331px]:mb-10">
+      <div
+        className="flex justify-center sm:justify-start items-center gap-2 sm:gap-2.5 flex-wrap relative
+        w-full bg-gradient-to-r from-pink-600 via-red-600 to-purple-600 rounded-xl"
+      >
         {user ? (
           <>
             <Image
-              className="w-full h-full absolute rounded-xl"
+              className="w-full h-full absolute rounded-xl p-[3px]"
               style={{ objectFit: "cover", objectPosition: "center" }}
               src={
                 user.background
@@ -46,7 +49,7 @@ export default async function UserProfile({ params }: { params: { id: string } }
               placeholder="blur"
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcvmhRPQAGTwJs6OQmwAAAAABJRU5ErkJggg=="
             />
-            <section className="flex items-center gap-3 p-3 relative">
+            <section className="relative flex top-20 sm:top-0 items-center gap-3 p-3 mx-[3px] my-[3px] bg-transparent sm:bg-black bg-opacity-50 rounded-l-xl">
               <Image
                 width={120}
                 height={120}
@@ -57,7 +60,7 @@ export default async function UserProfile({ params }: { params: { id: string } }
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcvmhRPQAGTwJs6OQmwAAAAABJRU5ErkJggg=="
               />
-              <div className="flex flex-col gap-1 text-white">
+              <div className="flex flex-col gap-1 text-black sm:text-gray-100 relative top-11 bg-gray-100 p-1 rounded sm:top-0 sm:bg-transparent">
                 <h2 className="text-lg font-medium mb-2">{user.name}</h2>
                 <p className="text-sm sm:text-base">{user.email}</p>
                 <p className="text-xs sm:text-sm">

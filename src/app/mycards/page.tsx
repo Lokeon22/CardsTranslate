@@ -64,7 +64,7 @@ export default async function MyCards({
           </Link>
         </nav>
 
-        <ButtonDelete />
+        {data.length > 0 && <ButtonDelete />}
       </div>
 
       <div className="max-w-7xl h-ful grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mx-auto my-4 px-2 sm:px-4">

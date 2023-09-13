@@ -63,7 +63,7 @@ export function Menu() {
                 src={close}
                 alt="Menu close icon"
               />
-              <ul className="z-10 absolute top-11 -right-2 px-2 pb-3 flex flex-col gap-3 w-screen bg-black animate-changeOpacity">
+              <ul className="z-50 absolute top-11 -right-2 px-2 pb-3 flex flex-col gap-3 w-screen bg-black animate-changeOpacity">
                 <Links text="Home" url="/" setMenu={setMenu} />
                 <Links text="Chat" url="/chat" setMenu={setMenu} />
                 <Links text="Meus cards" url="/mycards" setMenu={setMenu} />

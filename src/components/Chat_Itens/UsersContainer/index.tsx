@@ -48,9 +48,13 @@ export function UsersContainer({ data, online, currentUser }: UsersCProps) {
         placeholder="blur"
         blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcvmhRPQAGTwJs6OQmwAAAAABJRU5ErkJggg=="
       />
-      <div className="hidden lg:flex flex-col leading-3">
-        <p className="font-medium">{userData?.name}</p>
-        <span className="text-sm">{online ? "Online" : "Offline"}</span>
+      <div className="relative">
+        <span
+          className={`w-3 h-3 lg:w-3.5 lg:h-3.5 rounded-full inline-block absolute -left-4 -top-5 lg:-left-[19px] lg:-top-2.5
+          ${online ? "bg-green-500" : "bg-gray-400"}
+        `}
+        />
+        <p className="hidden lg:block font-medium text-sm xl:text-base">{userData?.name}</p>
       </div>
     </>
   );

@@ -37,7 +37,7 @@ export function ProfileForm({ user }: { user: UserProps }) {
       <form action={updateProfile}>
         <section className="relative flex justify-start items-center gap-1.5 sm:gap-2 p-1 sm:p-2.5">
           <Image
-            className="w-full h-full absolute rounded-xl -z-50 drop-shadow"
+            className="w-full h-full absolute rounded-xl -z-50 drop-shadow-xl"
             style={{ objectFit: "cover", objectPosition: "center" }}
             src={background}
             alt="user_background"
@@ -47,7 +47,7 @@ export function ProfileForm({ user }: { user: UserProps }) {
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNcvmhRPQAGTwJs6OQmwAAAAABJRU5ErkJggg=="
           />
           <div className="w-max absolute right-2 sm:right-3 bottom-[88%] sm:-bottom-[18px]">
-            <AiFillCamera className="w-7 sm:w-8 sm:h-8 h-7 text-orange-600 relative z-20 cursor-pointer" />
+            <AiFillCamera className="w-7 sm:w-8 sm:h-8 h-7 text-[#509aa5] relative z-20 cursor-pointer" />
             <input
               type="file"
               className="w-full absolute left-0 top-0 opacity-0 z-20"
