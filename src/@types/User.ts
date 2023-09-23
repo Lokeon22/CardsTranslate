@@ -5,6 +5,7 @@ export type UserLogin = {
     email: string;
     password: string;
     avatar: string | null;
+    background: string | null;
     created_at: Date;
   };
   token: string;

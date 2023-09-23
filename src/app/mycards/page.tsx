@@ -38,7 +38,7 @@ export default async function MyCards({
         <div className="flex items-center gap-5">
           <h2 className="text-xl font-semibold uppercase">Meus cards</h2>
           <Link
-            className="border-2 border-[#42929c] px-4 py-1.5 w-max uppercase text-sm hover:bg-[#43818A] hover:duration-500 hover:text-blue-100"
+            className="border-2 border-[#42929c] rounded px-4 py-1.5 w-max uppercase text-sm hover:bg-[#43818A] hover:duration-500 hover:text-blue-100"
             href={"/"}
           >
             Criar card
@@ -63,6 +63,15 @@ export default async function MyCards({
             Proximo
           </Link>
         </nav>
+
+        {data.length > 5 && (
+          <Link
+            href={"/mycards/exercise"}
+            className="ml-auto rounded border-2 border-[#42929c] px-4 py-1.5 w-max uppercase text-sm hover:bg-[#43818A] hover:duration-500 hover:text-blue-100"
+          >
+            Revisão
+          </Link>
+        )}
 
         {data.length > 0 && <ButtonDelete />}
       </div>
