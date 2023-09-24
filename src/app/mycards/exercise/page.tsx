@@ -51,12 +51,14 @@ export default async function Exercises() {
           </Link>
         </div>
 
-        <button
-          onClick={getExercise}
-          className="border-2 rounded border-[#42929c] px-4 py-1.5 w-max uppercase text-sm hover:bg-[#43818A] hover:duration-500 hover:text-blue-100"
-        >
-          Iniciar agora
-        </button>
+        {!data && (
+          <button
+            onClick={getExercise}
+            className="border-2 rounded border-[#42929c] px-4 py-1.5 w-max uppercase text-sm hover:bg-[#43818A] hover:duration-500 hover:text-blue-100"
+          >
+            Iniciar agora
+          </button>
+        )}
 
         {data && <ExerciseClient data={data} />}
       </div>

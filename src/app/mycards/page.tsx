@@ -64,7 +64,7 @@ export default async function MyCards({
           </Link>
         </nav>
 
-        {data.length > 5 && (
+        {data.length > 1 && (
           <Link
             href={"/mycards/exercise"}
             className="ml-auto rounded border-2 border-[#42929c] px-4 py-1.5 w-max uppercase text-sm hover:bg-[#43818A] hover:duration-500 hover:text-blue-100"
