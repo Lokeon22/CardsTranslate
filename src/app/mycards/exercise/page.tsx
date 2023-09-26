@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Cards } from "@/@types/Cards";
 import ExerciseClient from "@/components/ExerciseClient";
 
-export default async function Exercises() {
+export default function Exercises() {
   const [data, setData] = useState<Cards[]>();
 
   const [step, setStep] = useState<number[]>();

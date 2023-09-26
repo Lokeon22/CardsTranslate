@@ -5,7 +5,7 @@ const nextConfig = {
   },
   images: {
     remotePatterns: [
-      { protocol: "http", hostname: "127.0.0.1", port: "8080", pathname: "/files/**" },
+      { protocol: "https", hostname: "lkcards-api.onrender.com", port: "", pathname: "/files/**" },
     ],
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
