@@ -20,7 +20,7 @@ const nextConfig = {
     return [
       {
         // matching all API routes
-        source: "https://lkcards-api.onrender.com/*",
+        source: "/chat/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           { key: "Access-Control-Allow-Origin", value: "*" },
