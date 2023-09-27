@@ -25,7 +25,7 @@ export default function Chat() {
   const [sendMessage, setSendMessage] = useState<any | null>(null);
   const [receiveMessage, setReceiveMessage] = useState<any | null>(null);
 
-  const socket = connect("http://localhost:8080");
+  const socket = connect("https://lkcards-api.onrender.com"); //connect to server
 
   useEffect(() => {
     if (user?.id) {
